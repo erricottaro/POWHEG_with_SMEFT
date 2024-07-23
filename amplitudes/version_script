@@ -1,0 +1,11 @@
+LIBAMPLITUDES_1.0.0 {
+	global:
+		*mod_amplitudes_parameters_*_set_amplitudes_parameters*;
+		*mod_amplitudes_parameters_*_update_amplitudes_parameters*;
+		*mod_ampsq*_zz_*_reslo*;
+		*mod_ampsq*_zz_*_reslo*_sping*;
+		*mod_auxfunctions_*_getpolvectors*;
+
+	local:
+		*;
+};

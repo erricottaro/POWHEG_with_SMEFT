@@ -1,0 +1,18 @@
+ampLO_ggh2ww.o : ampLO_ggh2ww.f90 func_for_h2vv.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+ampLO_ggh2zz.o : ampLO_ggh2zz.f90 func_for_h2vv.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+ampLO_ggww.o : ampLO_ggww.f90 func_for_h2vv.o mod_avec_mcfm.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+ampLO_ggzz.o : ampLO_ggzz.f90 mod_avec_mcfm.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+ampLO_ggzz_mass.o : ampLO_ggzz_mass.f90 auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+ampsqLO_ww.o : ampsqLO_ww.f90 ampLO_ggh2ww.o ampLO_ggww.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+ampsqLO_zz.o : ampsqLO_zz.f90 ampLO_ggzz_mass.o ampLO_ggh2zz.o ampLO_ggzz.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+auxfunctions.o : auxfunctions.f90 common_def.o mod_consts_dp.o mod_types.o
+common_def.o : common_def.f90 mod_types.o
+func_for_amp_1loop.o : func_for_amp_1loop.f90 auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+func_for_h2vv.o : func_for_h2vv.f90 auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+heli_zz_heft.o : heli_zz_heft.f90 mod_consts_dp.o mod_types.o
+MCFM.o : MCFM.f90
+mod_avec_mcfm.o : mod_avec_mcfm.f90 func_for_amp_1loop.o auxfunctions.o mod_consts_dp.o common_def.o mod_types.o
+mod_consts_dp.o : mod_consts_dp.f90 common_def.o mod_types.o
+mod_types.o : mod_types.f90
+set_parameters_in_amplitudes.o : set_parameters_in_amplitudes.f90 mod_consts_dp.o common_def.o mod_types.o
+spinorweight.o : spinorweight.f90
