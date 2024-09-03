@@ -22,7 +22,7 @@ c but never closed ...
       real * 8 mass_low,mass_high
       integer nup,ndown,ngen
       ! - SMEFT parameters
-      double precision  ph_cggh, ph_cb, ph_ct
+      !double precision  ph_cggh, ph_cb, ph_ct, ph_cz
       real * 8 pwhg_alphas
       external pwhg_alphas
       integer j
@@ -163,8 +163,13 @@ c     Initialize couplings and parameters in amplitudes library
       write(*,*), " check that b-mass is non-zero and massive loops are T",ph_bmass, massiveloops
 c     Initialize SMEFT couplings
 	  ph_cggh=powheginput("#cggh")
+	  if(ph_cggh<0d0) ph_cggh=1.0d0
 	  ph_cb=powheginput("#cb")
+	  if(ph_cb<0d0) ph_cb=1.0d0 
 	  ph_ct=powheginput("#ct")
+	  if(ph_ct<0d0) ph_ct=1.0d0
+	  ph_cz=powheginput("#cz")
+	  if(ph_cz<0d0) ph_cz=1.0d0
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 C    Set here the number of light flavours
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
@@ -184,7 +189,7 @@ c     Consistency checks:
       call set_amplitudes_parameters(ph_Zmass,ph_Zwidth,ph_Wmass
      $     ,ph_Wwidth,ph_sthw2, ph_unit_e, ph_Hmass, ph_Hwidth, ph_tmass, ph_bmass,
      $     st_nlight, nup, ndown, ngen, iddecay1, iddecay2, flg_proc
-     $     ,flg_contr, ph_cggh, ph_cb, ph_ct)
+     $     ,flg_contr, ph_cggh, ph_cb, ph_ct, ph_cz)
 
 *********************************************************
 * Print out of all the relevant couplings
@@ -213,6 +218,7 @@ c     Consistency checks:
       write(*,*) 'cggh = ', ph_cggh
       write(*,*) 'cb = ', ph_cb
       write(*,*) 'ct = ', ph_ct
+      write(*,*) 'cz = ', ph_cz
       write(*,*) '**************************************************'
       end
 
