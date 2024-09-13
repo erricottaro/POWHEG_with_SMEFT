@@ -22,8 +22,9 @@ contains
     real(dp) :: hmass2
 
     call geta2a4(sprod(j1,j2),sprod(j1,j3),sprod(j2,j3),expmass**2,mya2a_t,mya2b_t,mya2c_t,mya4_t)
-
+	! print *, expmass
     if (hwithb) then
+       ! print *, "USING MASSIVE BOTTOM", mbsq 
        call geta2a4(sprod(j1,j2),sprod(j1,j3),sprod(j2,j3),mbsq,mya2a_b,mya2b_b,mya2c_b,mya4_b)
     else
        mya2a_b = czero
@@ -31,11 +32,11 @@ contains
        mya2c_b = czero
        mya4_b = czero
     endif
-    ! -- here bottom and top contributions are summed
-    mya2a = mya2a_t + mya2a_b
-    mya2b = mya2b_t + mya2b_b
-    mya2c = mya2c_t + mya2c_b
-    mya4 = mya4_t + mya4_b
+    ! -- here bottom and top contributions are summed (here we insert cggh, ct and cb)
+    mya2a = cggh + ct*mya2a_t + cb*mya2a_b
+    mya2b = cggh + ct*mya2b_t + cb*mya2b_b
+    mya2c = cggh + ct*mya2c_t + cb*mya2c_b
+    mya4 = cggh + ct*mya4_t + cb*mya4_b
     
     hmass2 = sprod(j1,j2)+sprod(j1,j3)+sprod(j2,j3)
 

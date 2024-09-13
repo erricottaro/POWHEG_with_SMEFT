@@ -145,7 +145,7 @@ contains
 
        else                           ! Higgs with full mass dependence
           if (first) print *, "Using full mass dependence for Higgs amplitudes"
-          amp_gggh2zz =  ewampR_gggh2zz(1,2,3,4,5,6,7,za,zb,sprod)
+          amp_gggh2zz =  ewampR_gggh2zz(1,2,7,3,4,5,6,za,zb,sprod)
 
           ! correct color factor 
           amp_gggh2zz = sqrt(two)*amp_gggh2zz 
@@ -290,7 +290,7 @@ contains
 
     first=.false.
 
-    !-- fix pre-factor -- no color factor, this has already been included
+    !-- fix pre-factor -- no color factor, this has already been included 
     resR = avegg * resR
 
     return

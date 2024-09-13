@@ -77,7 +77,8 @@ contains
     prop45 = one/(sprod(j4,j5)-mzsq + ci * mz*gaz)
     prop67 = one/(sprod(j6,j7)-mzsq + ci * mz*gaz)
 
-    prefac = -ci * gwsq**2/12.0_dp/cosW2**2*propH*prop45*prop67
+!   here introduce Z rescaling cz
+    prefac = -ci * gwsq**2/12.0_dp/cosW2**2*propH*prop45*prop67*cz
 
     call get_ampprod_h2vv_real(j1,j2,j3,j4,j5,j6,j7,za,zb,sprod,ampprod)
 
