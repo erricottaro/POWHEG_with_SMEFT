@@ -254,6 +254,7 @@
           double precision :: olacc
           id = register(lflav,12,approx=trim(approx))
           call set_parameter("alpha_qcd", st_alpha)   !alpha_qcd
+          ! print *, st_alpha
           call evaluate_loop2(id, p, res, olacc)
           res=res/(st_alpha/(2d0*pi))
           if(present(acc)) then

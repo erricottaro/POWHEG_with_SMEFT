@@ -19,6 +19,8 @@
       logical ini
       data ini/.true./
       save ini
+      ! tolerance to test disagreement between OL and Raoul code
+      real *8 tol
       real * 8 ptVVcut
       save ptVVcut
       real *8 powheginput,coplanarity,coplan
@@ -27,6 +29,7 @@
       external pwhg_isfinite
       common /OL_stability/acc, accmax
       logical, save :: noexternalvqq = .false.
+      integer i
 
 c     Set OL accuracy to very high value: if OL manages to calculate a stable point, acc is set to a small value
       acc=1d8
@@ -71,10 +74,12 @@ c      too singular even for quad precision to fix it, throw it away
          return
       endif
 
-c     here we introduce the SMEFT amplitudes (can be used only with only_h)
+c     here we introduce the SMEFT amplitudes (can be used only with only_h). amplitudes tested, match with openloops (13/09/2024)
 	  call resR_ZZ_heft(pin, ph_tmass, amp2_smeft)
-c     i do not know which component of the output I should use
-	  amp2=amp2_smeft(0)
+	  amp2_smeft(:)=2*st_alpha*st_alpha*amp2_smeft(:)
+c	  write(*,*), "alpha_s", st_alpha
+c	  write(*,*), "amp2_fixed_order", amp2_smeft(0)
+	  
 c      if (noexternalvqq .and. (rflav(1) /= 0 .or. rflav(2) /= 0) .and.
 c     &      (flg_approx == "" .or. flg_approx == "interf" .or. flg_approx == "noh")
 c     &      ) then
@@ -86,8 +91,19 @@ c        end if
 c      else
 c        call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx))
 c      end if
-c      call openloops_real(p,rflavnores,amp2_ol)
+c      call openloops_real(p,rflavnores,amp2_ol) !this should remain commented even when openloops is used (13/09/2024)
+c	   write(*,*), "amp2_ol", amp2_ol
 c      amp2=amp2_ol
+
+c	 tol = 0.0001d0
+c	 if(abs(1-amp2_smeft(0)/amp2_ol).gt.tol) then
+c	 print *, "Possible disagreement between FO code and OL"
+c	 print *, "F0:", amp2_smeft(0)
+c	 print *, "OL:", amp2_ol
+c	 end if		
+
+	   amp2=amp2_smeft(0)
+	 
       end
 
 
