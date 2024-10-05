@@ -24,6 +24,7 @@ contains
     complex(dp) :: ff1l,ff2l,ff_t,ff_b,spinamp(-1:1,-1:1,-1:1,-1:1)
     integer :: h3,h5
     real(dp) :: s12
+    complex(dp) smeft_prefactor
 
     s12 = sprod(j1,2)
 
@@ -41,8 +42,12 @@ contains
     else
        ff_b = czero
     endif
+    smeft_prefactor = cggh_prop_factor(s12)
+    !-- in case it doesn't solve the issue (05/10/2024)
+    ! smeft_prefactor = one
+    
     !-- adding SMEFT coefficients (23/06/2024)
-    ff1l =three/two*cggh + ct*ff_t + cb*ff_b
+    ff1l =three/two*smeft_prefactor*cggh + ct*ff_t + cb*ff_b
 
     !-- 2-loop, finite mt-mb (expmass is the mass of the top (09/04/2024))
     ff_t = getff_2l(s12,expmass**2)

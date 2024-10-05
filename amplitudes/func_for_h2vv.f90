@@ -4,9 +4,28 @@ module mod_func_for_h2vv
   implicit none
   private
 
-  public :: getff,getff_heft
+  public :: cggh_prop_factor,getff,getff_heft
 
 contains
+
+  !-- Following conventions from arXiv:2212.08560v2
+  function cggh_prop_factor(s12)
+  	complex(dp) :: cggh_prop_factor
+  	complex(dp) :: L_buchalla
+  	real(dp) :: S_exp_factor
+  	real(dp) :: s12
+
+  	L_buchalla = log((mu/s12)**2) + ci*pi
+
+  	S_exp_factor = log(four*pi)-eulergamma
+
+  	cggh_prop_factor = pisq/six - L_buchalla**2 +two*(b0 + L_buchalla)*S_exp_factor - S_exp_factor**2
+  	
+  	cggh_prop_factor = cggh_prop_factor*xn
+
+  	return
+
+  end function cggh_prop_factor				   
 
   !-- top quark triangle amplitude, -> 1 in the heavy top approximation
   !-- this is 3/8/s Mbar[s] in higgsamp.pdf
