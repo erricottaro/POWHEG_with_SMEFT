@@ -292,6 +292,8 @@ contains
 
     !-- fix pre-factor -- no color factor, this has already been included 
     resR = avegg * resR
+!    print*, "Real amplitude squared", resR
+!    stop
 
     return
   end subroutine resR_ZZ_heft
