@@ -76,33 +76,28 @@ c      too singular even for quad precision to fix it, throw it away
 
 c     here we introduce the SMEFT amplitudes (can be used only with only_h). amplitudes tested, match with openloops (13/09/2024)
 	  call resR_ZZ_heft(pin, ph_tmass, amp2_smeft)
-	  amp2_smeft(:)=2*st_alpha*st_alpha*amp2_smeft(:)
+	  amp2_smeft(:)=amp2_smeft(:)*2.0*(st_alpha)**2
 c	  write(*,*), "alpha_s", st_alpha
 c	  write(*,*), "amp2_fixed_order", amp2_smeft(0)
 	  
-c      if (noexternalvqq .and. (rflav(1) /= 0 .or. rflav(2) /= 0) .and.
-c     &      (flg_approx == "" .or. flg_approx == "interf" .or. flg_approx == "noh")
-c     &      ) then
-c        if (flg_approx == "interf" .or. flg_approx == "noh") then
-c          call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx) // "_noexternalvqq")
-c        else
-c          call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx) // "noexternalvqq")
-c        end if
-c      else
-c        call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx))
-c      end if
+      if (noexternalvqq .and. (rflav(1) /= 0 .or. rflav(2) /= 0) .and.
+     &      (flg_approx == "" .or. flg_approx == "interf" .or. flg_approx == "noh")
+     &      ) then
+        if (flg_approx == "interf" .or. flg_approx == "noh") then
+          call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx) // "_noexternalvqq")
+        else
+          call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx) // "noexternalvqq")
+        end if
+      else
+        call ol_loop2real(pin,rflav,amp2_ol,acc,trim(flg_approx))
+      end if
 c      call openloops_real(p,rflavnores,amp2_ol) !this should remain commented even when openloops is used (13/09/2024)
 c	   write(*,*), "amp2_ol", amp2_ol
 c      amp2=amp2_ol
-
-c	 tol = 0.0001d0
-c	 if(abs(1-amp2_smeft(0)/amp2_ol).gt.tol) then
-c	 print *, "Possible disagreement between FO code and OL"
-c	 print *, "F0:", amp2_smeft(0)
-c	 print *, "OL:", amp2_ol
-c	 end if		
-
-	   amp2=amp2_smeft(0)
+		
+c    lets try this strategy: call openloops, such that Vegas samples the right distribution, then substitute the result from ol with the FO code one
+	 amp2_ol=amp2_smeft(0)
+	 amp2=amp2_smeft(0)
 	 
       end
 
