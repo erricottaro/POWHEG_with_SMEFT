@@ -1,7 +1,7 @@
 !#define USE_OPENLOOPS
 c     computation of the Born amplitude
       subroutine setborn(pin,bflav,born,bornjk,bmunu)
-      use mod_ampsqLO_zz, only: resLO_ZZ_heft, resLO_ZZ_heft_smeft, resLO_sping_ZZ_heft
+      use mod_ampsqLO_zz, only: resLO_ZZ_heft, resLO_sping_ZZ_heft
       use mod_ampsqLO_ww, only: resLO_WW,resLO_sping_WW
       use mod_auxfunctions, only: getPolVectors
       use openloops_powheg, only: ol_loop2 => openloops_loop2
@@ -28,6 +28,10 @@ c     computation of the Born amplitude
       logical pwhg_isfinite
       external pwhg_isfinite
       common /OLborn/OLborn
+      
+c     i need the value of the rescaling factor (st_alpha/2d0*pi)**2 for debugging
+c      print *, "(alpha_s/2pi)^2", (st_alpha/2d0/pi)**2
+c      stop
 c
       if((.not.pwhg_isfinite(kn_jacborn)).or.(kn_jacborn.eq.0d0)) then
          born=0d0
@@ -36,10 +40,10 @@ c
          return
       endif
 
-	  !-this is just for testing the scaling of virtual cross section with respect to SMEFT coupling parameters (they scale correctly)
-      ! call  setvirtual(pin,bflav,born)
-      ! born = born * st_alpha/(2d0*pi)
-      ! return
+	  !-this is just for testing the scaling of virtual amplitude with respect to SMEFT coupling parameters (they scale correctly)
+c      call  setvirtual(pin,bflav,born)
+c      born = born * st_alpha/(2d0*pi)
+c      return
 
 #ifdef USE_OPENLOOPS
       call ol_loop2(pin,bflav,OLborn,bornjk,bmunu,approx=trim(flg_approx))
@@ -64,8 +68,8 @@ c    change lepton ordering
 
       if (flg_bornonly) then
         if (flg_proc.eq."ZZ") then
-           call resLO_ZZ_heft_smeft(p,ph_tmass,born) ! done with SMEFT parameters
-           !call resLO_ZZ_heft(p,ph_tmass,born)
+           ! done with SMEFT parameters
+           call resLO_ZZ_heft(p,ph_tmass,born)
         elseif (flg_proc.eq."WW")  then
            call resLO_WW(p,ph_tmass,born)
         endif
