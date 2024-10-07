@@ -5,47 +5,47 @@ module mod_ampLO_ggh2zz
   implicit none
   private
 
-  public :: ewamplo_ggh2zz_smeft !-- amplitude with SMEFT couplings
+!  public :: ewamplo_ggh2zz_smeft !-- amplitude with SMEFT couplings
   public :: ewamplo_ggh2zz
   public :: ewamplo_ggh2zz_heft
   public :: ewamptilde_ggh2zz !-- amplitude without the ff massive form factor
 
 contains
   ! -- with SMEFT couplings
-  function ewampLO_ggh2zz_smeft(j1,j2,j3,j4,j5,j6,za,zb,sprod)
-	complex(dp) :: ewampLO_ggh2zz_smeft(-1:1,-1:1,-1:1,-1:1) !amplitude is an array of 4 arrays of dimension 3. 0th index is not used, -1 and 1 are helicities (date: 30/03/24)
-    integer, intent(in) :: j1,j2,j3,j4,j5,j6
-    complex(dp), intent(in) :: za(6,6), zb(6,6)
-    real(dp), intent(in) :: sprod(6,6)
-    real(dp) :: s12
-    complex(dp) :: ff,ff_t,ff_b,spinamp(-1:1,-1:1,-1:1,-1:1)
-    integer :: h3,h5
+!  function ewampLO_ggh2zz_smeft(j1,j2,j3,j4,j5,j6,za,zb,sprod)
+!	complex(dp) :: ewampLO_ggh2zz_smeft(-1:1,-1:1,-1:1,-1:1) !amplitude is an array of 4 arrays of dimension 3. 0th index is not used, -1 and 1 are helicities (date: 30/03/24)
+!    integer, intent(in) :: j1,j2,j3,j4,j5,j6
+!    complex(dp), intent(in) :: za(6,6), zb(6,6)
+!    real(dp), intent(in) :: sprod(6,6)
+!    real(dp) :: s12
+!    complex(dp) :: ff,ff_t,ff_b,spinamp(-1:1,-1:1,-1:1,-1:1)
+!    integer :: h3,h5
 
-    ewampLO_ggh2zz_smeft = czero ! means complex zero (date: 23/03/24)
+!    ewampLO_ggh2zz_smeft = czero ! means complex zero (date: 23/03/24)
 
-    s12 = sprod(j1,j2) ! invariant mass of the system, sprod is scalar product (02/04/2024)
+!    s12 = sprod(j1,j2) ! invariant mass of the system, sprod is scalar product (02/04/2024)
 
     !-- finite mt-mb
-    ff_t = getff(s12,expmass**2) 
-	if(hwithb) then
-		ff_b = getff(s12, mbsq)
-	else
-		ff_b = czero
-	endif
-	ff = three/two*cggh + ct*ff_t + cb*ff_b
+!    ff_t = getff(s12,expmass**2) 
+!	if(hwithb) then
+!		ff_b = getff(s12, mbsq)
+!	else
+!		ff_b = czero
+!	endif
+!	ff = three/two*cggh + ct*ff_t + cb*ff_b
     
-    spinamp = ewamptilde_ggh2zz(j1,j2,j3,j4,j5,j6,za,zb,sprod)
+!    spinamp = ewamptilde_ggh2zz(j1,j2,j3,j4,j5,j6,za,zb,sprod)
 
-    do h3 = -1,1,2
-    do h5 = -1,1,2
-       ewampLO_ggh2zz_smeft(-1,-1,h3,h5) = ff * spinamp(-1,-1,h3,h5)
-       ewampLO_ggh2zz_smeft(+1,+1,h3,h5) = ff * spinamp(+1,+1,h3,h5)
-    enddo
-    enddo
+!    do h3 = -1,1,2
+!    do h5 = -1,1,2
+!       ewampLO_ggh2zz_smeft(-1,-1,h3,h5) = ff * spinamp(-1,-1,h3,h5)
+!       ewampLO_ggh2zz_smeft(+1,+1,h3,h5) = ff * spinamp(+1,+1,h3,h5)
+!    enddo
+!    enddo
 
-    return
+!    return
 	
-  end function ewamplo_ggh2zz_smeft  
+!  end function ewamplo_ggh2zz_smeft  
 
   !-- 0 -> g(1) g(2) [l(3) lb(4)] [l(5) lb(6)]
   !-- label: h1,h2,h3,h5,coefficient of as/twopi * delta(a,b)
@@ -71,6 +71,7 @@ contains
     else
        ff_b = czero
     endif
+    !-- with EWChL parameters 
     ff = three/two*cggh + ct*ff_t + cb*ff_b
 
     spinamp = ewamptilde_ggh2zz(j1,j2,j3,j4,j5,j6,za,zb,sprod)
@@ -132,7 +133,8 @@ contains
     real(dp) :: s12
     integer :: h3,h5
 
-    prefactor_coupl = gwsq**2/12.0_dp/cosW2**2 !-- see docs/higgsamp.pdf
+	!-- modified with EWChL parameter cz
+    prefactor_coupl = cz*gwsq**2/12.0_dp/cosW2**2 !-- see docs/higgsamp.pdf
     ewamptilde_ggh2zz = czero
 
     !-- result taken from MCFM, src/ZZ/getggHZZamps.f
