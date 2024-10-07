@@ -7,13 +7,13 @@ module mod_amplitudes_parameters
 
 contains
 
-  subroutine set_amplitudes_parameters(mz_in,gz_in,mw_in,gw_in,sw2_in,e_in,mh_in,gh_in,mt_in, mb_in, nf_in, nup_in, ndn_in, ng_in, decay1_in, decay2_in, proc_in, contr_in, cggh_in, cb_in, ct_in)
+  subroutine set_amplitudes_parameters(mz_in,gz_in,mw_in,gw_in,sw2_in,e_in,mh_in,gh_in,mt_in, mb_in, nf_in, nup_in, ndn_in, ng_in, decay1_in, decay2_in, proc_in, contr_in, cggh_in, cb_in, ct_in, cz_in)
 
     real(dp), intent(in) :: mz_in,gz_in,mw_in,gw_in,sw2_in,e_in,mh_in,gh_in,mt_in,mb_in
     integer, intent(in) :: nf_in,nup_in,ndn_in,ng_in, decay1_in, decay2_in
     character, intent(in) :: proc_in*(10), contr_in*(10)
     ! - SMEFT couplings
-    real(dp), intent(in) :: cggh_in, cb_in, ct_in
+    real(dp), intent(in) :: cggh_in, cb_in, ct_in, cz_in
     
   
      mh = mh_in
@@ -39,6 +39,7 @@ contains
      cggh = cggh_in
      cb = cb_in
      ct = ct_in
+     cz = cz_in
 
      Vup = 1.0_dp/2.0_dp - 4.0_dp/3.0_dp*sinW2
      Vdn = -1.0_dp/2.0_dp + 2.0_dp/3.0_dp*sinW2

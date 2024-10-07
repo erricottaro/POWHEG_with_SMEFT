@@ -73,6 +73,7 @@ module mod_consts_dp
   real(dp), public :: cggh
   real(dp), public :: cb
   real(dp), public :: ct
+  real(dp), public :: cz
   !--
   real(dp), public, parameter :: Qup =  2.0_dp/3.0_dp
   real(dp), public, parameter :: Qdn = -1.0_dp/3.0_dp
