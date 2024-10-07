@@ -42,9 +42,9 @@ contains
     else
        ff_b = czero
     endif
-    smeft_prefactor = cggh_prop_factor(s12)
+!    smeft_prefactor = cggh_prop_factor(s12)
     !-- in case it doesn't solve the issue (05/10/2024)
-    ! smeft_prefactor = one
+    smeft_prefactor = one
     
     !-- adding SMEFT coefficients (23/06/2024)
     ff1l =three/two*smeft_prefactor*cggh + ct*ff_t + cb*ff_b
